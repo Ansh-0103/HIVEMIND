@@ -1,0 +1,17 @@
+{
+  "Describe BBDU lucknow in 100 words": {
+    "gemini": "Model unavailable: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+    "groq": "Babu Banarasi Das University (BBDU) in Lucknow, Uttar Pradesh, is a private, multidisciplinary institution founded in 2010. Accredited by the UGC, it offers undergraduate, postgraduate, and doctoral programs across engineering, management, pharmacy, law, humanities, and health sciences. The sprawling 30‑acre campus combines modern infrastructure with green spaces, featuring state‑of‑the‑art labs, libraries, auditoriums, and sports facilities. BBDU emphasizes industry‑linked curricula, research collaborations, and entrepreneurship, supported by incubation centers and partnerships with global universities. Student life thrives through cultural festivals, technical fests, and community outreach, fostering holistic development and preparing graduates for competitive professional environments. Its alumni excel in diverse national sectors.",
+    "final": "Select two or more working AIs to get a combined verdict."
+  },
+  "How ai can help in education in 100 words?": {
+    "gemini": "Model unavailable: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+    "groq": "AI transforms education by personalizing learning pathways, adapting content to each student's pace and style. Intelligent tutors offer instant feedback, clarify concepts, and generate practice problems, freeing teachers to focus on mentorship. Automated grading streamlines assessment, allowing rapid insight into class performance. Data analytics identify knowledge gaps, guiding curriculum adjustments and early interventions. Language models translate materials, supporting multilingual classrooms. Virtual simulations create immersive, experiential lessons in science, history, and engineering. Administrative tasks like scheduling and resource allocation become efficient, reducing workload. Ultimately, AI fosters inclusive, engaging, and data‑driven environments that empower learners and educators alike worldwide and future‑ready globally.",
+    "final": "Select two or more working AIs to get a combined verdict."
+  },
+  "describe api in 100 words in 100 words": {
+    "gemini": "Model unavailable: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and ",
+    "groq": "An API, or Application Programming Interface, is a set of rules and protocols that enables different software components to communicate. It defines how requests are formatted, how data is exchanged, and what responses look like, abstracting underlying implementation details. Developers use APIs to access functionality of operating systems, libraries, web services, or hardware without needing to understand internal code. APIs can be local, such as library calls, or remote, like RESTful web services using HTTP. By providing a consistent contract, APIs promote modularity, reuse, and integration, allowing diverse applications to interoperate efficiently. They also enable rapid development and scalable architectures.",
+    "final": "Select two or more working AIs to get a combined verdict."
+  }
+}

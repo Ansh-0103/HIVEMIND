@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dotenv import load_dotenv
 from google import genai
 from groq import Groq
+from openai import OpenAI
 
 load_dotenv()
 
@@ -50,14 +51,57 @@ def make_verdict(question, answers):
         "3) A final recommendation. Keep the whole verdict under 150 words.")
     return ask_groq(prompt)
 
+def make_hive_answer(question, answers):
+    good = {n: a for n, a in answers.items() if not a.startswith("Model unavailable")}
+    if len(good) < 2:
+        return ""
+    text = "\n\n".join(n.upper() + " said:\n" + a for n, a in good.items())
+    prompt = ("A user asked: " + question + "\n\nSeveral AIs answered:\n\n" + text +
+              "\n\nNow write ONE single best answer to the user's question yourself, "
+              "combining the strongest parts of the answers above. Do not mention the AIs. "
+              "Follow the user's request exactly, such as the number of lines or words.")
+    return ask_groq(prompt)
 
+def make_votes(question, answers):
+    import json, re
+    good = {n: a for n, a in answers.items() if not a.startswith("Model unavailable")}
+    if len(good) < 2:
+        return {}
+    letters = {n: chr(65 + i) for i, n in enumerate(good)}
+    text = "\n\n".join("ANSWER " + letters[n] + ":\n" + a for n, a in good.items())
+    keys = ", ".join(letters.values())
+    prompt = ("A user asked: " + question + "\n\n" + text +
+              "\n\nJudge which answer helps the user best (clarity, accuracy, usefulness). "
+              "Give each answer a percentage so the total is 100. "
+              "Reply with ONLY a JSON object using exactly these keys: " + keys +
+              '. Example: {"A": 60, "B": 40}')
+    try:
+        raw = ask_groq(prompt)
+        data = json.loads(re.search(r"\{.*\}", raw, re.S).group(0))
+        scores = {n: float(data[letters[n]]) for n in good}
+        total = sum(scores.values())
+        if total <= 0:
+            return {}
+        return {n: round(v * 100 / total) for n, v in scores.items()}
+    except Exception:
+        return {}
+
+
+    
 def ask_council(question, selected=None):
     names = selected or list(MODELS)
-    short_q = question + "\n\n(Keep your answer under 120 words.)"
+    short_q = question + "\n\n(Keep your answer under 100 words unless the user asked for a specific length.)"
     with ThreadPoolExecutor() as pool:
         futures = {n: pool.submit(MODELS[n], short_q) for n in names}
-        answers = {n: f.result() for n, f in futures.items()}
-    answers["final"] = make_verdict(question, answers)
+        model_answers = {n: f.result() for n, f in futures.items()}
+    answers = dict(model_answers)
+    with ThreadPoolExecutor() as pool:
+        f_final = pool.submit(make_verdict, question, model_answers)
+        f_hive = pool.submit(make_hive_answer, question, model_answers)
+        f_votes = pool.submit(make_votes, question, model_answers)
+        answers["final"] = f_final.result()
+        answers["hive"] = f_hive.result()
+        answers["votes"] = f_votes.result()
     return answers
 import json
 

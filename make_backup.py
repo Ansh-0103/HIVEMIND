@@ -2,9 +2,11 @@ import json
 from backend import ask_council
 
 QUESTIONS = [
-    "Describe BBDU lucknow in 100 words",
-    "How ai can help in education in 100 words?",
-    "describe api in 100 words in 100 words",
+    "Describe what is multi llm model in 100 woreds?",
+    "What is the formula for calculating simple interest?",
+    "write a 10-12 lines poem about the beauty of nature",
+    "write a program to obtain factorial of a number",
+    "which is the greatest Christopher Nolan movie ever made in 100 words?",
 ]
 
 backup = {}

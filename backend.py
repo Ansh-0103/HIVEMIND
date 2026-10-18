@@ -11,13 +11,18 @@ GROQ_MODEL = "openai/gpt-oss-120b"
 
 
 def ask_gemini(question):
-    try:
-        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-        r = client.models.generate_content(model=GEMINI_MODEL, contents=question)
-        return r.text
-    except Exception as e:
-        return "Model unavailable: " + str(e)[:120]
-
+    import time
+    for attempt in range(3):
+        try:
+            client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+            r = client.models.generate_content(model=GEMINI_MODEL, contents=question)
+            return r.text
+        except Exception as e:
+            msg = str(e)
+            if ("503" in msg or "UNAVAILABLE" in msg) and attempt < 2:
+                time.sleep(3)
+                continue
+            return "Model unavailable: " + msg[:120]
 
 def ask_groq(question):
     try:

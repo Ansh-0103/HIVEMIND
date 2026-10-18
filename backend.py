@@ -47,19 +47,18 @@ def make_verdict(question, answers):
     prompt = (
         "A user asked: " + question + "\n\nSeveral AIs answered:\n\n" + text +
         "\n\nWrite three short parts: 1) Where they agree, 2) Where they differ, "
-        "3) A final recommendation."
-    )
+        "3) A final recommendation. Keep the whole verdict under 150 words.")
     return ask_groq(prompt)
 
 
 def ask_council(question, selected=None):
     names = selected or list(MODELS)
+    short_q = question + "\n\n(Keep your answer under 120 words.)"
     with ThreadPoolExecutor() as pool:
-        futures = {n: pool.submit(MODELS[n], question) for n in names}
+        futures = {n: pool.submit(MODELS[n], short_q) for n in names}
         answers = {n: f.result() for n, f in futures.items()}
     answers["final"] = make_verdict(question, answers)
     return answers
-
 import json
 
 def saved_questions():

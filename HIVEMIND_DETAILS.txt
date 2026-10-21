@@ -1,0 +1,13 @@
+Project Name: HIVE MIND
+Tagline: One question. A hive of AIs. One smarter answer.
+GitHub Link: https://github.com/Ansh-0103/HIVEMIND
+Event: Software Exhibition 2026 (Lakshya Forum, School of Computer Applications)
+
+Participant 1: Ansh Shukla
+Course: BCA (Data Science and AI), 1st Year, BBDU Lucknow
+Roll No.:1260258114
+Contact: 904427010
+
+Participant 2: Ravi Kumar Raj
+Course: BCA (Data Science and AI), 1st Year, BBDU Lucknow
+Roll No. : 1260258431
